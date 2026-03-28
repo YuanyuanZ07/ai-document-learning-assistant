@@ -1,0 +1,26 @@
+Retrieval-Augmented Generation - more common name RAG is a framework that improves Large Language Model (LLM) with external knowledge bases outside of static training data before generating a response. It is a highly effective, cost-efficient, and scalable method to ground LLM responses, reduce hallucinations, and provide up-todate, domain-specific information. 
+  
+Unlike traditional LLM-based systems that are limited by their training data RAG improves text generation by incorporating relevant external information. RAG create autonomous systems integrated with LLMs and retrieval mechanisms, allowing these systems to make decisions, adapt to changing requirements. 
+Key concepts 
+Retrieval: 
+Retrieval is the process of searching and selecting relevant information from external data sources, such as documents or databases. Instead of relying only on pre-trained knowledge,the system finds useful content that matches the user’s query. 
+Embeddings: 
+Embeddings are numerical representations of text that capture its meaning. Words, sentences, or documents are converted into vectors, allowing the system to compare and find similarities between different pieces of text using semantic meaning rather than exact keywords. 
+Vector Store: 
+A vector store is a database used to store embeddings. It allows efficient searching of similar vectors, enabling the system to quickly find the most relevant information based on a user’s query. 
+LLM: 
+A Large Language Model (LLM) is responsible for generating responses in natural language. In a RAG system, the LLM uses both the user’s query and the retrieved information to produce accurate and context-aware answers. 
+Augmentation: 
+Augmentation refers to the process of combining retrieved information with the user’s query before sending it to the LLM. This ensures that the generated response is based on relevant and up-to-date data, improving accuracy and reducing hallucinations. 
+ 
+ 
+What is LlamaIndex? 
+LlamaIndex is an open-source data framework designed to connect custom, private, or external data to Large Language Models (LLMs) for building Retrieval-Augmented Generation (RAG) applications. It is available in Python and TypeScript and provides tools that simplify context augmentation for generative AI systems. 
+How does LlamaIndex work? 
+LlamaIndex allows users to ingest, organize, and structure their private or custom data. It processes data by dividing it into smaller chunks, converting it into embeddings, and storing it in a vector index. This enables efficient retrieval of relevant information when a query is made. 
+How does it work with RAG? 
+LlamaIndex implements RAG by connecting external data sources to LLMs. It converts data into vector embeddings, stores them in a vector database, and retrieves relevant information based on user queries. 
+The retrieved data is then combined with the user’s query and passed to the LLM, allowing it to generate more accurate and context-aware responses. This approach reduces hallucinations and enables querying over private or proprietary data. 
+Applications such as query engines, chatbots, and AI agents commonly use this approach to enhance performance and reliability. 
+What I have learned: 
+I researched the LlamaIndex framework to understand how it supports RAG systems. Then, I tested a basic example using LlamaIndex by creating a sample text document and loading it into the system. I then generated a vector index and used the query engine to ask questions and summarize the content. The system successfully retrieved relevant information and produced accurate responses
