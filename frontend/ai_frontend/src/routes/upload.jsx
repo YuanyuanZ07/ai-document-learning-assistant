@@ -29,7 +29,20 @@ const Upload = () => {
     };
 
     const handleSummary = async () => {
-         await handleUpdate("summary");
+         try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/summary/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: message })
+            });
+
+            const data = await res.json();
+            setSummary(data.summary);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
 
@@ -49,12 +62,12 @@ const Upload = () => {
 
         try {
         
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/upload`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
             method: 'POST',
             body: formData
         });
             const data = await response.json();
-            setResponse(data.response);
+            setResponse(data.message);
             setMessage('');
             
             if (data.summary) {
