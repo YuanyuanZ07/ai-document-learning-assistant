@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 const Upload = () => {
     const [file , setfile] = useState(null);  
     const [message, setMessage] = useState('');
@@ -146,15 +147,28 @@ const Upload = () => {
             </form>
 
             {response && (
-                <div className="mt-6 w-full max-w-2xl bg-white p-4 rounded-lg shadow-md">
-                    <p className='text-gray-800'>{response}</p>
+                <div className="mt-6 w-full max-w-2xl bg-blue-50 p-6 rounded-xl shadow-md border border-blue-200">
+                    <h2 className="text-lg font-semibold text-blue-700 mb-3">Response</h2>
+                    <div className="text-gray-800 prose prose-sm max-w-none
+                        prose-headings:text-gray-900 prose-headings:font-semibold prose-headings:mt-4 prose-headings:mb-2
+                        prose-p:my-2 prose-p:leading-relaxed
+                        prose-ul:my-2 prose-ul:pl-5 prose-li:my-1
+                        prose-strong:text-gray-900">
+                        <ReactMarkdown>{response}</ReactMarkdown>
+                    </div>
                 </div>
             )}
 
             {summary && (
-                <div className="mt-6 w-full max-w-2xl bg-purple-50 p-4 rounded-lg shadow-md border border-purple-200">
-                    <h2 className="text-lg font-semibold text-purple-700 mb-2">Summary</h2>
-                    <p className='text-gray-800'>{summary}</p>
+                <div className="mt-6 w-full max-w-2xl bg-purple-50 p-6 rounded-xl shadow-md border border-purple-200">
+                    <h2 className="text-lg font-semibold text-purple-700 mb-3">Summary</h2>
+                    <div className="text-gray-800 prose prose-sm max-w-none
+                        prose-headings:text-gray-900 prose-headings:font-semibold prose-headings:mt-4 prose-headings:mb-2
+                        prose-p:my-2 prose-p:leading-relaxed
+                        prose-ul:my-2 prose-ul:pl-5 prose-li:my-1
+                        prose-strong:text-gray-900">
+                        <ReactMarkdown>{summary}</ReactMarkdown>
+                    </div>
                 </div>
             )}
         </div>

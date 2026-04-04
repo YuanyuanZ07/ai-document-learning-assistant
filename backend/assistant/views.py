@@ -84,6 +84,7 @@ def upload_file(request):
             result["summary"] = doc.summary
         except Exception as e:
             logger.exception("Summary generation failed for document %s", doc.id)
+            result["summary"] = f"Summary generation failed: {str(e)}"
 
     return Response(result, status=status.HTTP_201_CREATED)
 

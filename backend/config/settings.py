@@ -134,5 +134,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# OpenAI API Key (set via environment variable)
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+# Hugging Face API Token (set via environment variable)
+HUGGINGFACE_API_TOKEN = os.environ.get('HUGGINGFACE_API_TOKEN', '')

@@ -1,19 +1,25 @@
 from llama_index.core import Document, VectorStoreIndex, Settings
-from llama_index.llms.openai import OpenAI
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 from django.conf import settings
+from .hf_llm import HFInferenceLLM
 
 
 def answer_question(question, context):
-    """Answer a question based on the provided document text using LlamaIndex."""
+    """Answer a question based on the provided document text using LlamaIndex RAG with Hugging Face."""
     if not context.strip():
         return "No document content available to answer the question."
 
-    llm = OpenAI(
-        model="gpt-3.5-turbo",
-        api_key=settings.OPENAI_API_KEY,
+    api_token = settings.HUGGINGFACE_API_TOKEN
+    if not api_token:
+        raise ValueError("HUGGINGFACE_API_TOKEN is not set. Please set it as an environment variable.")
+
+    llm = HFInferenceLLM(token=api_token)
+    embed_model = HuggingFaceEmbedding(
+        model_name="BAAI/bge-small-en-v1.5",
     )
     Settings.llm = llm
+    Settings.embed_model = embed_model
 
     doc = Document(text=context)
     index = VectorStoreIndex.from_documents([doc])
