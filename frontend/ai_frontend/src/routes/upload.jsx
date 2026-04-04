@@ -1,5 +1,3 @@
-'use client'
-import "tailwindcss";
 import { useState } from 'react';
 const Upload = () => {
     const [file , setfile] = useState(null);  
@@ -29,19 +27,33 @@ const Upload = () => {
     };
 
     const handleSummary = async () => {
-         try {
+        if (file) {
+            await handleUpdate("scan");
+            return;
+        }
+
+        if (!message.trim()) {
+            alert("Please upload a file or enter text to summarize.");
+            return;
+        }
+
+        setLoading(true);
+        try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/summary/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ text: message })
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: message })
             });
 
             const data = await res.json();
-            setSummary(data.summary);
+            setSummary(data.summary || "No summary returned.");
         } catch (err) {
             console.error(err);
+            setSummary("An error occurred while generating the summary.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -62,7 +74,7 @@ const Upload = () => {
 
         try {
         
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/upload/`, {
             method: 'POST',
             body: formData
         });
@@ -83,10 +95,10 @@ const Upload = () => {
 
     return (
         
-        <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center p-6">
 
-            <h1 className="text-5xl font-bold mb-2 text-center">Upload a Document</h1>
-                <p className='mb-8 text-gray-400 text-center'>
+            <h1 className="text-5xl font-bold mb-2 text-center">AI Document Learning Assistant</h1>
+                <p className='mb-8 text-gray-500 text-center'>
                     Upload a document, scan it using AI, ask questions, or generate a summary.
                 </p>
                     <form className="w-full max-w-3xl flex flex-col gap-4">
@@ -94,7 +106,7 @@ const Upload = () => {
                 <input
                     type="file"
                     onChange={handleFileChange}
-                    className="w-full bg-gray-800 p-3 rounded-lg border border-gray-600 cursor-pointer"
+                    className="w-full bg-gray-50 p-3 rounded-lg border border-gray-300 cursor-pointer"
                 />
 
                 <textarea
@@ -102,7 +114,7 @@ const Upload = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Ask a question..."
                     rows={5}
-                    className="w-full px-5 py-4 rounded-xl bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-5 py-4 rounded-xl bg-gray-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
 
                 <div className="flex gap-4 justify-center mt-2">
@@ -136,6 +148,13 @@ const Upload = () => {
             {response && (
                 <div className="mt-6 w-full max-w-2xl bg-white p-4 rounded-lg shadow-md">
                     <p className='text-gray-800'>{response}</p>
+                </div>
+            )}
+
+            {summary && (
+                <div className="mt-6 w-full max-w-2xl bg-purple-50 p-4 rounded-lg shadow-md border border-purple-200">
+                    <h2 className="text-lg font-semibold text-purple-700 mb-2">Summary</h2>
+                    <p className='text-gray-800'>{summary}</p>
                 </div>
             )}
         </div>
